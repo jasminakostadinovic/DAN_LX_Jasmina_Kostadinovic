@@ -81,6 +81,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EmployeeRecordsModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\GeneratingData.cs" />
     <Compile Include="Model\tblEmployee.cs">
       <DependentUpon>EmployeeRecordsModel.tt</DependentUpon>
     </Compile>
@@ -167,7 +168,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Validations\Validations.csproj">
+      <Project>{607DB3D6-C4C4-464B-9D3B-BFF92464AA97}</Project>
+      <Name>Validations</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Model\EmployeeRecordsModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
