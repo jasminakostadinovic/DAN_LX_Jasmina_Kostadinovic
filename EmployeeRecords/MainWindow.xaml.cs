@@ -19,7 +19,8 @@ namespace EmployeeRecords
             //hiding id columns
             if (e.Column.Header.ToString() == "EmployeeID"
                 || e.Column.Header.ToString() == "LocationID"
-                || e.Column.Header.ToString() == "SectorID")
+                || e.Column.Header.ToString() == "SectorID"
+                || e.Column.Header.ToString() == "DateOfBirth")
             {
                 e.Column.Visibility = Visibility.Collapsed;
             }

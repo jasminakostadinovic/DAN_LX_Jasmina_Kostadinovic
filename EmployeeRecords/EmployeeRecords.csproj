@@ -66,6 +66,7 @@
     </ApplicationDefinition>
     <Compile Include="Loggers\Logger.cs" />
     <Compile Include="Model\DataAccess.cs" />
+    <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\EmployeeRecordsModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
