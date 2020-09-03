@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeRecordsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GivenName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PersonalNo" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="RegistrationNumber" Type="nvarchar" MaxLength="9" Nullable="false" />
+          <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="15" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="Manager" Type="nvarchar" MaxLength="50" />
+          <Property Name="SectorID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblLocations">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Place" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblSectors">
+          <Key>
+            <PropertyRef Name="SectorID" />
+          </Key>
+          <Property Name="SectorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EmployeeRecords.dbo.vwEmployees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwEmployees">
+          <Key>
+            <PropertyRef Name="Employee Given Name" />
+            <PropertyRef Name="Employee Surname" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="Registration Number" />
+            <PropertyRef Name="SectorID" />
+            <PropertyRef Name="Sector" />
+            <PropertyRef Name="LocationID" />
+            <PropertyRef Name="Address" />
+          </Key>
+          <Property Name="Employee Given Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Employee Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="15" />
+          <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="Manager" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="Registration Number" Type="nvarchar" MaxLength="9" Nullable="false" />
+          <Property Name="SectorID" Type="int" Nullable="false" />
+          <Property Name="Sector" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="1504" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__tblEmploy__Locat__6477ECF3">
+          <End Role="tblLocations" Type="Self.tblLocations" Multiplicity="1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLocations">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblEmploy__Secto__656C112C">
+          <End Role="tblSectors" Type="Self.tblSectors" Multiplicity="1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSectors">
+              <PropertyRef Name="SectorID" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="SectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeRecordsModelStoreContainer">
+          <EntitySet Name="tblEmployee" EntityType="Self.tblEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLocations" EntityType="Self.tblLocations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSectors" EntityType="Self.tblSectors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwEmployees" EntityType="Self.vwEmployees" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwEmployees].[Employee Given Name] AS [Employee Given Name], 
+    [vwEmployees].[Employee Surname] AS [Employee Surname], 
+    [vwEmployees].[Sex] AS [Sex], 
+    [vwEmployees].[Telephone] AS [Telephone], 
+    [vwEmployees].[DateOfBirth] AS [DateOfBirth], 
+    [vwEmployees].[Manager] AS [Manager], 
+    [vwEmployees].[EmployeeID] AS [EmployeeID], 
+    [vwEmployees].[Registration Number] AS [Registration Number], 
+    [vwEmployees].[SectorID] AS [SectorID], 
+    [vwEmployees].[Sector] AS [Sector], 
+    [vwEmployees].[LocationID] AS [LocationID], 
+    [vwEmployees].[Address] AS [Address]
+    FROM [dbo].[vwEmployees] AS [vwEmployees]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__tblEmploy__Locat__6477ECF3" Association="Self.FK__tblEmploy__Locat__6477ECF3">
+            <End Role="tblLocations" EntitySet="tblLocations" />
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblEmploy__Secto__656C112C" Association="Self.FK__tblEmploy__Secto__656C112C">
+            <End Role="tblSectors" EntitySet="tblSectors" />
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeRecordsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GivenName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PersonalNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegistrationNumber" Type="String" MaxLength="9" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telephone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="Manager" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SectorID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblLocation" Relationship="Self.FK__tblEmploy__Locat__6477ECF3" FromRole="tblEmployee" ToRole="tblLocations" />
+          <NavigationProperty Name="tblSector" Relationship="Self.FK__tblEmploy__Secto__656C112C" FromRole="tblEmployee" ToRole="tblSectors" />
+        </EntityType>
+        <EntityType Name="tblLocation">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Place" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblEmployees" Relationship="Self.FK__tblEmploy__Locat__6477ECF3" FromRole="tblLocations" ToRole="tblEmployee" />
+        </EntityType>
+        <EntityType Name="tblSector">
+          <Key>
+            <PropertyRef Name="SectorID" />
+          </Key>
+          <Property Name="SectorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblEmployees" Relationship="Self.FK__tblEmploy__Secto__656C112C" FromRole="tblSectors" ToRole="tblEmployee" />
+        </EntityType>
+        <EntityType Name="vwEmployee">
+          <Key>
+            <PropertyRef Name="Employee_Given_Name" />
+            <PropertyRef Name="Employee_Surname" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="Registration_Number" />
+            <PropertyRef Name="SectorID" />
+            <PropertyRef Name="Sector" />
+            <PropertyRef Name="LocationID" />
+            <PropertyRef Name="Address" />
+          </Key>
+          <Property Name="Employee_Given_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Employee_Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telephone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Manager" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="Registration_Number" Type="String" MaxLength="9" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SectorID" Type="Int32" Nullable="false" />
+          <Property Name="Sector" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="1504" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__tblEmploy__Locat__6477ECF3">
+          <End Role="tblLocations" Type="Self.tblLocation" Multiplicity="1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLocations">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblEmploy__Secto__656C112C">
+          <End Role="tblSectors" Type="Self.tblSector" Multiplicity="1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSectors">
+              <PropertyRef Name="SectorID" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="SectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeRecordsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblEmployees" EntityType="Self.tblEmployee" />
+          <EntitySet Name="tblLocations" EntityType="Self.tblLocation" />
+          <EntitySet Name="tblSectors" EntityType="Self.tblSector" />
+          <EntitySet Name="vwEmployees" EntityType="Self.vwEmployee" />
+          <AssociationSet Name="FK__tblEmploy__Locat__6477ECF3" Association="Self.FK__tblEmploy__Locat__6477ECF3">
+            <End Role="tblLocations" EntitySet="tblLocations" />
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblEmploy__Secto__656C112C" Association="Self.FK__tblEmploy__Secto__656C112C">
+            <End Role="tblSectors" EntitySet="tblSectors" />
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeRecordsModelStoreContainer" CdmEntityContainer="EmployeeRecordsEntities">
+          <EntitySetMapping Name="tblEmployees">
+            <EntityTypeMapping TypeName="EmployeeRecordsModel.tblEmployee">
+              <MappingFragment StoreEntitySet="tblEmployee">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="PersonalNo" ColumnName="PersonalNo" />
+                <ScalarProperty Name="RegistrationNumber" ColumnName="RegistrationNumber" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="SectorID" ColumnName="SectorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLocations">
+            <EntityTypeMapping TypeName="EmployeeRecordsModel.tblLocation">
+              <MappingFragment StoreEntitySet="tblLocations">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSectors">
+            <EntityTypeMapping TypeName="EmployeeRecordsModel.tblSector">
+              <MappingFragment StoreEntitySet="tblSectors">
+                <ScalarProperty Name="SectorID" ColumnName="SectorID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwEmployees">
+            <EntityTypeMapping TypeName="EmployeeRecordsModel.vwEmployee">
+              <MappingFragment StoreEntitySet="vwEmployees">
+                <ScalarProperty Name="Employee_Given_Name" ColumnName="Employee Given Name" />
+                <ScalarProperty Name="Employee_Surname" ColumnName="Employee Surname" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Registration_Number" ColumnName="Registration Number" />
+                <ScalarProperty Name="SectorID" ColumnName="SectorID" />
+                <ScalarProperty Name="Sector" ColumnName="Sector" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
