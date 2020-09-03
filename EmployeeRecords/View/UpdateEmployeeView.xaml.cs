@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EmployeeRecords.Model;
+using EmployeeRecords.ViewModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace EmployeeRecords.View
 {
@@ -19,9 +9,10 @@ namespace EmployeeRecords.View
     /// </summary>
     public partial class UpdateEmployeeView : Window
     {
-        public UpdateEmployeeView()
+        public UpdateEmployeeView(tblEmployee selectedEmployee)
         {
             InitializeComponent();
+            this.DataContext = new UpdateEmployeeViewModel(this, selectedEmployee);
         }
     }
 }
