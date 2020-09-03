@@ -3,10 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EmployeeRecords.View"
-        mc:Ignorable="d"
-        Title="DeleteEmployeeView" Height="450" Width="800">
-    <Grid>
-        
+          mc:Ignorable="d"
+            Title="Delete Employee" Height="150" Width="300" Background="#2e3137" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0,0">
+        <Label Content="Are you shure you want to delete employee" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Button Name="btnSave" Content="Yes" Height="20" Width="70" HorizontalAlignment="Left"
+                Command="{Binding Save, UpdateSourceTrigger=PropertyChanged}" Background="#545d6a" Foreground="White" Margin="20,30,0,0"/>
+        <Button Name="btnExit" Content="No" Height="20" Width="70" HorizontalAlignment="Right"
+                Command="{Binding Exit, UpdateSourceTrigger=PropertyChanged}" Background="#545d6a" Foreground="White" Margin="0,30,20,0"/>
+
     </Grid>
 </Window>
