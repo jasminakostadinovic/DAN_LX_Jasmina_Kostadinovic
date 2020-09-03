@@ -1,0 +1,73 @@
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].EmployeeRecords'))
+DROP DATABASE EmployeeRecords;
+
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE NAME = 'EmployeeRecords')
+	CREATE DATABASE EmployeeRecords;
+
+GO
+USE EmployeeRecords;
+
+--Droping tables
+
+IF  EXISTS (SELECT * FROM sys.objects 
+	WHERE NAME = 'tblEmployee')
+	DROP TABLE tblEmployee
+
+IF  EXISTS (SELECT * FROM sys.objects 
+	WHERE NAME = 'tblLocations')
+	DROP TABLE tblLocations
+
+IF  EXISTS (SELECT * FROM sys.objects 
+	WHERE NAME = 'tblSectors')
+	DROP TABLE tblSectors
+
+--Creating tables
+
+CREATE TABLE tblSectors
+	(SectorID int primary key identity(1,1),
+	[Name] nvarchar(50) not null);
+
+CREATE TABLE tblLocations
+	(LocationID int primary key identity(1,1),
+	Adress nvarchar(500) not null,
+	Place nvarchar(500) not null,
+	[State] nvarchar(500) not null,);
+
+CREATE TABLE tblEmployee
+	(EmployeeID int primary key identity(1,1),
+	GivenName nvarchar(50) not null,
+	Surname nvarchar(50) not null,
+	PersonalNo nvarchar(13) unique not null,
+	RegistrationNumber nvarchar(9) unique not null,	
+	DateOfBirth datetime not null, 
+	Sex nvarchar(1) not null,
+	Telephone nvarchar(15),
+	LocationID int foreign key(LocationID) references tblLocations(LocationID) not null,
+	Manager nvarchar(50),
+	SectorID int foreign key(SectorID) references tblSectors(SectorID) not null,);
+
+--droping view	if exist
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[vwEmployees]'))
+DROP VIEW [dbo].[vwEmployees]
+
+--creating view	
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[vwEmployees]
+AS
+SELECT   
+  TOP (100) PERCENT 
+                      dbo.tblEmployee.GivenName AS [Employee Given Name], dbo.tblEmployee.Surname AS [Employee Surname], 
+					  dbo.tblEmployee.Sex, dbo.tblEmployee.Telephone, dbo.tblEmployee.DateOfBirth, dbo.tblEmployee.Manager,
+					  dbo.tblEmployee.EmployeeID, dbo.tblEmployee.RegistrationNumber AS [Registration Number], 
+					  dbo.tblSectors.SectorID,   dbo.tblSectors.Name AS Sector,
+                      dbo.tblLocations.LocationID, dbo.tblLocations.Adress + ', ' + dbo.tblLocations.Place + ', ' + dbo.tblLocations.State AS [Address]
+					
+FROM                  dbo.tblEmployee INNER JOIN
+                      dbo.tblSectors ON dbo.tblEmployee.SectorID = dbo.tblSectors.SectorID INNER JOIN
+                      dbo.tblLocations ON dbo.tblEmployee.LocationID = dbo.tblLocations.LocationID;
+
+GO
