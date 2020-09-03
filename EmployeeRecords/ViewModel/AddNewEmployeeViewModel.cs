@@ -23,22 +23,29 @@ namespace EmployeeRecords.ViewModel
         private tblEmployee employee;
         private tblSector sector;
         private List<tblSector> sectors;
-        private string surname;
-        private string givenName;
-        private string personalNo;
-        private string sex;
-        private string telephone;
-        private string registrationNumber;
         private string sectorName;
         private List<string> managers;
-        private string manager;
+        private string personalNo;
+        private string registrationNumber;
+        private string sex;
         #endregion
 
         #region Properties
         public bool IsAddedNewEmployee { get; internal set; }
         public bool CanSave { get; set; }
         public int EmployeeAge { get; private set; }
-
+        public string RegistrationNumber
+        {
+            get
+            {
+                return registrationNumber;
+            }
+            set
+            {
+                registrationNumber = value;
+                OnPropertyChanged(nameof(RegistrationNumber));
+            }
+        }
         public List<tblSector> Sectors
         {
             get
@@ -52,56 +59,17 @@ namespace EmployeeRecords.ViewModel
                 OnPropertyChanged(nameof(Sectors));
             }
         }
-        public string PersonalNo
+        public tblSector Sector
         {
             get
             {
-                return personalNo;
+                return sector;
             }
             set
             {
-                if (personalNo == value) return;
-                personalNo = value;
-                OnPropertyChanged(nameof(PersonalNo));
-            }
-        }
-        public string Surname
-        {
-            get
-            {
-                return surname;
-            }
-            set
-            {
-                if (surname == value) return;
-                surname = value;
-                OnPropertyChanged(nameof(Surname));
-            }
-        }
-
-        public string GivenName
-        {
-            get
-            {
-                return givenName;
-            }
-            set
-            {
-                if (givenName == value) return;
-                givenName = value;
-                OnPropertyChanged(nameof(GivenName));
-            }
-        }
-        public string Sex
-        {
-            get
-            {
-                return sex;
-            }
-            set
-            {
-                sex = value;
-                OnPropertyChanged(nameof(Sex));
+                if (sector == value) return;
+                sector = value;
+                OnPropertyChanged(nameof(Sector));
             }
         }
         public tblEmployee Employee
@@ -117,57 +85,6 @@ namespace EmployeeRecords.ViewModel
             }
         }
 
-        public tblSector Sector
-
-        {
-            get
-            {
-                return sector;
-            }
-            set
-            {
-                sector = value;
-                OnPropertyChanged(nameof(Sector));
-            }
-        }
-
-        public string Telephone
-        {
-            get
-            {
-                return telephone;
-            }
-            set
-            {
-                telephone = value;
-                OnPropertyChanged(nameof(Telephone));
-            }
-        }
-
-        public string RegistrationNumber
-        {
-            get
-            {
-                return registrationNumber;
-            }
-            set
-            {
-                registrationNumber = value;
-                OnPropertyChanged(nameof(RegistrationNumber));
-            }
-        }
-        public string SectorName
-        {
-            get
-            {
-                return sectorName;
-            }
-            set
-            {
-                sectorName = value;
-                OnPropertyChanged(nameof(SectorName));
-            }
-        }
         public List<string> Managers
         {
             get
@@ -180,16 +97,16 @@ namespace EmployeeRecords.ViewModel
                 OnPropertyChanged(nameof(Managers));
             }
         }
-        public string Manager
+        public List<tblLocation> Locations
         {
             get
             {
-                return manager;
+                return locations;
             }
             set
             {
-                manager = value;
-                OnPropertyChanged(nameof(Manager));
+                locations = value;
+                OnPropertyChanged(nameof(Locations));
             }
         }
         public tblLocation Location
@@ -204,17 +121,41 @@ namespace EmployeeRecords.ViewModel
                 OnPropertyChanged(nameof(Location));
             }
         }
-
-        public List<tblLocation> Locations
+        public string SectorName
         {
             get
             {
-                return locations;
+                return sectorName;
             }
             set
             {
-                locations = value;
-                OnPropertyChanged(nameof(Locations));
+                sectorName = value;
+                OnPropertyChanged(nameof(SectorName));
+            }
+        }
+        public string PersonalNo
+        {
+            get
+            {
+                return personalNo;
+            }
+            set
+            {
+                if (personalNo == value) return;
+                personalNo = value;
+                OnPropertyChanged(nameof(PersonalNo));
+            }
+        }
+        public string Sex
+        {
+            get
+            {
+                return sex;
+            }
+            set
+            {
+                sex = value;
+                OnPropertyChanged(nameof(Sex));
             }
         }
         #endregion
@@ -222,16 +163,16 @@ namespace EmployeeRecords.ViewModel
         #region Constructors
         public AddNewEmployeeViewModel(AddNewEmployeeView addNewEmployeeView)
         {
+            Employee = new tblEmployee();
             this.addNewEmployeeView = addNewEmployeeView;
             PersonalNo = string.Empty;
             Sex = string.Empty;
-            Telephone = string.Empty;
+            Employee.Telephone = string.Empty;
             RegistrationNumber = string.Empty;
             SectorName = string.Empty;
-            Manager = string.Empty;
-            Surname = string.Empty;
-            GivenName = string.Empty;
-            Employee = new tblEmployee();
+            Employee.Manager = string.Empty;
+            Employee.Surname = string.Empty;
+            Employee.GivenName = string.Empty;
             Locations = LoadLocations();
             Sector = new tblSector();
             CanSave = true;
@@ -244,7 +185,7 @@ namespace EmployeeRecords.ViewModel
         private void LogAddedNewEmployee(object sender, DoWorkEventArgs e)
         {
             Thread.Sleep(2000);
-            Logger.Instance.Log($"[{DateTime.Now.ToString("dd.MM.yyyy hh: mm")}] Created new employee with registration number: '{RegistrationNumber}'");
+            Logger.Instance.Log($"[{DateTime.Now.ToString("dd.MM.yyyy hh: mm")}] Created new employee with registration number: '{Employee.RegistrationNumber}'");
         }
 
         #endregion
@@ -259,7 +200,7 @@ namespace EmployeeRecords.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.Message);
                 return null;
             }
         }
@@ -272,7 +213,7 @@ namespace EmployeeRecords.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.Message);
                 return null;
             }
         }
@@ -285,7 +226,7 @@ namespace EmployeeRecords.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.Message);
                 return null;
             }
         }
@@ -310,7 +251,7 @@ namespace EmployeeRecords.ViewModel
                 var db = new DataAccess();
                 string validationMessage = string.Empty;
 
-                if (name == "PersonalNo")
+                if (name == nameof(PersonalNo))
                 {
                     if (!validate.IsValidPersonalNoFormat(PersonalNo))
                     {
@@ -333,7 +274,7 @@ namespace EmployeeRecords.ViewModel
                         }
                     }
                 }
-                else if (name == "Sex")
+                else if (name == nameof(Sex))
                 {
                     if (!string.IsNullOrWhiteSpace(Sex))
                     {
@@ -346,7 +287,7 @@ namespace EmployeeRecords.ViewModel
                     }
 
                 }
-                else if (name == "RegistrationNumber")
+                else if (name == nameof(RegistrationNumber))
                 {
                     if (RegistrationNumber.Length != 9 || !validate.IsDigitsOnly(RegistrationNumber))
                     {
@@ -384,10 +325,10 @@ namespace EmployeeRecords.ViewModel
         private bool CanSaveExecute()
         {
             if (
-                string.IsNullOrWhiteSpace(GivenName)
-                || string.IsNullOrWhiteSpace(Surname)
+                string.IsNullOrWhiteSpace(Employee.GivenName)
+                || string.IsNullOrWhiteSpace(Employee.Surname)
                 || string.IsNullOrWhiteSpace(Sex)
-                || string.IsNullOrWhiteSpace(Telephone)
+                || string.IsNullOrWhiteSpace(Employee.Telephone)
                 || string.IsNullOrWhiteSpace(RegistrationNumber)
                 || string.IsNullOrWhiteSpace(PersonalNo)
                 || Location.LocationID == 0
@@ -401,17 +342,11 @@ namespace EmployeeRecords.ViewModel
             try
             {
                 var db = new DataAccess();
-                Employee.GivenName = GivenName;
-                Employee.Surname = Surname;
-                Employee.PersonalNo = PersonalNo;
                 Employee.Sex = Sex.ToLower();
+                Employee.RegistrationNumber = RegistrationNumber;
+                Employee.PersonalNo = PersonalNo;
                 Employee.LocationID = Location.LocationID;
                 Employee.DateOfBirth = GeneratingData.GenerateBirthdate(Employee.PersonalNo);
-                EmployeeAge = GeneratingData.CalculateAge(Employee.DateOfBirth);
-                Employee.Manager = Manager;
-                Employee.Telephone = Telephone;
-                Employee.RegistrationNumber = RegistrationNumber;
-                Employee.DateOfBirth = GeneratingData.GenerateBirthdate(PersonalNo);
                 if (Sectors.Any(s => s.Name == SectorName))
                 {
                     Employee.SectorID = Sectors.First(s => s.Name == SectorName).SectorID;
@@ -437,12 +372,13 @@ namespace EmployeeRecords.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.Message);
             }
         }
 
         //Escaping action
         private ICommand exit;
+
         public ICommand Exit
         {
             get

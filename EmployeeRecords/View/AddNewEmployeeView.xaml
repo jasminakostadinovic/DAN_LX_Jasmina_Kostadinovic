@@ -64,11 +64,11 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
 
         <TextBox Grid.Column="3" Grid.Row="1" Name="txtClientGivenName" Height="20" MinWidth="200"
                  TextWrapping="Wrap"
-                 Text="{Binding GivenName, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Employee.GivenName, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBox Grid.Column="3" Grid.Row="3" Name="txtClientSurname" Height="20" MinWidth="200"
                  TextWrapping="Wrap"
-                 Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Employee.Surname, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBox Grid.Column="3" Grid.Row="5" Name="txtClientPersonalNo" Height="20" MinWidth="200"
                  TextWrapping="Wrap"
@@ -87,7 +87,7 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                  Text="{Binding RegistrationNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         <TextBox Grid.Column="3" Grid.Row="13" Name="txtTel" Height="20" MinWidth="200"
                  TextWrapping="Wrap"
-                 Text="{Binding Telephone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                 Text="{Binding Employee.Telephone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
         <TextBox Grid.Column="3" Grid.Row="15" Name="txtSector" Height="20" MinWidth="200"
                  TextWrapping="Wrap"
@@ -95,7 +95,7 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
 
         <ComboBox Grid.Column="3" Grid.Row="17" Name="cmbManager" Height="20" Width="auto" 
                  IsEditable="True" ItemsSource="{Binding Managers, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding Manager, UpdateSourceTrigger=PropertyChanged}"/>
+                  SelectedItem="{Binding Employee.Manager, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Button Grid.Column="3" Grid.Row="24" Name="btnSave" Content="Save" Height="20" Width="70" HorizontalAlignment="Right"
                 Command="{Binding Save, UpdateSourceTrigger=PropertyChanged}" Background="#545d6a" Foreground="White"  />
